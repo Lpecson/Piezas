@@ -30,3 +30,32 @@ TEST(PiezasTest, dropPiece1)
 	}
 	ASSERT_TRUE(ret);
 }
+
+TEST(PiezasTest, dropPiece2)
+{
+	Piezas obj;
+	Piece p = obj.dropPiece(1);
+	p = obj.dropPiece(1);
+	bool ret;
+	if ( p == O )
+	{
+		ret = true;
+	}
+	ASSERT_TRUE(ret);
+}
+
+TEST(PiezasTest, GameStateXWin)
+{
+	Piezas obj;
+	p = obj.dropPiece(1);
+	p = obj.dropPiece(2);
+	p = obj.dropPiece(1);
+	p = obj.dropPiece(2);
+	p = obj.dropPiece(1);
+	p = obj.gameState();
+	if ( p == X )
+	{
+		ret = true;
+	}
+	ASSERT_TRUE(ret);
+}
