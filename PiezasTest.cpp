@@ -18,3 +18,15 @@ TEST(PiezasTest, sanityCheck)
 {
 	ASSERT_TRUE(true);
 }
+
+TEST(PiezasTest, dropPiece1)
+{
+	Piezas obj;
+	Piece p = obj.dropPiece(1);
+	bool ret;
+	if ( p == X )
+	{
+		ret = true;
+	}
+	ASSERT_TRUE(ret);
+}

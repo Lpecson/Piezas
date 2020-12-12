@@ -22,6 +22,14 @@
 **/
 Piezas::Piezas()
 {
+	for( int i=0; i<3; i++ )
+	{
+		for (int j=0; j<4; j++ )
+		{
+			board[i][j] = Blank;
+		}
+	}
+	turn = X;
 }
 
 /**
@@ -30,6 +38,13 @@ Piezas::Piezas()
 **/
 void Piezas::reset()
 {
+	for( int i=0; i<3; i++ )
+	{
+		for (int j=0; j<4; j++ )
+		{
+			board[i][j] = Blank;
+		}
+	}
 }
 
 /**
@@ -42,6 +57,37 @@ void Piezas::reset()
 **/ 
 Piece Piezas::dropPiece(int column)
 {
+	if( column > 4 )
+	{
+		if( turn == X )
+		{
+			turn = O;
+		}
+		else
+		{
+			turn = X;
+		}
+		return Blank;
+	}
+	else
+	{
+		for( int i=0; i<3; i++)
+		{
+			if ( board[i][column] == Blank )
+			{
+				if( turn == X )
+				{
+					turn = O;
+				}
+				else
+				{
+					turn = X;
+				}
+				board[i][column] == turn;
+				return turn;
+			}
+		}
+	}
     return Blank;
 }
 
@@ -51,7 +97,13 @@ Piece Piezas::dropPiece(int column)
 **/
 Piece Piezas::pieceAt(int row, int column)
 {
-    return Blank;
+	if( row > 2 or column > 3 )
+	{
+		return Invalid;
+	}
+	Piece temp;
+	temp = board[row][column];
+	return temp;
 }
 
 /**
@@ -65,5 +117,91 @@ Piece Piezas::pieceAt(int row, int column)
 **/
 Piece Piezas::gameState()
 {
-    return Blank;
+	int x = 0;
+	int o = 0;
+	int xRow = 0;
+	int oRow = 0;
+	int xMost = 0;
+	int oMost = 0;
+	for( int i=0; i<4; i++)
+	{
+		for( int j=0; j<3; j++)
+		{
+			if ( board[j][i] == X )
+			{
+				x++;
+			}
+			else if ( board[i][j] == O )
+			{
+				o++;
+			}
+			else
+			{
+				return Invalid;
+			}
+		}
+		if( x == 3 )
+		{
+			return X;
+		}
+		else if( o == 3 )
+		{
+			return O;
+		}
+		else
+		{
+			x = 0;
+			o = 0;
+		}
+	}
+	for( int i=0; i<3; i++)
+	{
+		for( int j=0; j<4; j++)
+		{
+			if ( board[i][j] == X )
+			{
+				x++;
+				xRow++;
+				if( xRow > xMost )
+				{
+					xMost = xRow;
+				}
+				if( xRow == 3 )
+				{
+					return X;
+				}
+				oRow = 0;
+			}
+			else if ( board[i][j] == O )
+			{
+				o++;
+				oRow++;
+				if( oRow > oMost )
+				{
+					oMost = oRow;
+				}
+				if( oRow == 3 )
+				{
+					return O;
+				}
+				xRow = 0;
+			}
+			else
+			{
+				return Invalid;
+			}
+		}	
+	}
+	if( oMost > xMost )
+	{
+		return O;
+	}
+	else if ( xMost > oMost )
+	{
+		return X;
+	}
+	else
+	{
+		return Blank;
+	}
 }
